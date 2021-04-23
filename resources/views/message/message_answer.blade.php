@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Форма для ответа на сообщение {{$message->name}} пользователя {{$message->user->name}}</h1>
         {!!
-            Form::model($message, ['method' => 'post', 'id'=> 'form' , 'enctype' => 'multipart/form-data' , 'route' => ['message.answer', ['id' => $message->id, 'user' => $user, 'message_text' => $message_text]], 'class' => 'form-line'])
+            Form::model($message, ['method' => 'post', 'id'=> 'form' , 'enctype' => 'multipart/form-data' , 'route' => ['message.answer', 'id'=> $message->id], 'class' => 'form-line'])
         !!}
         {!! Form::token() !!}
         <span class="text-danger error-text name_error"></span>

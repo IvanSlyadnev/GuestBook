@@ -19,9 +19,9 @@ Route::get('message/form/', 'MessageController@form')->name('message.form');
 
 Route::get('message/edit/{id}', 'MessageController@edit')->name('message.edit');
 
-Route::get('message/answer/{id}//{user}/{message_text}', 'MessageController@answerForm')->name('message.answer.form');
+Route::get('message/answer/{id}', 'MessageController@answerForm')->name('message.answer.form');
 
-Route::post('message/answer/{id}/{user}/{message_text}', 'MessageController@answer')->name('message.answer');
+Route::post('message/answer/{id}', 'MessageController@answer')->name('message.answer');
 
 Route::post('message/create', 'MessageController@create')->name('message.create');
 

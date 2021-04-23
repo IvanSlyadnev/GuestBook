@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $messages = Message::all();
+        $messages = Message::where('answer', 0)->get();
         return view('home', [
             'messages' => $messages
         ]);

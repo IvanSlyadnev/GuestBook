@@ -14,7 +14,7 @@ class Message extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    public function create($request, $message_id = null, $user = null, $message = null) {
+    public function create($request, $message_id = null) {
         $this->name = $request->input('name');
         $this->user_id = Auth::user()->id;
         if ($request->file('image') != null) {
@@ -24,9 +24,6 @@ class Message extends Model
         if ($message_id != null) {
             $this->answered_id = $message_id;
             $this->answer = true;
-            $this->user_answered = $user;
-            $this->message = $message;
-
         }
         $this->save();
     }

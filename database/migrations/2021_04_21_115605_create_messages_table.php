@@ -18,8 +18,6 @@ class CreateMessagesTable extends Migration
             $table->text('name');
             $table->string('image')->nullable(true);
             $table->boolean('answer')->default(false);
-            $table->string('user_answered')->nullable(true);
-            $table->string('message')->nullable(true);
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('answered_id')->nullable(true);
             $table->foreign('user_id')->references('id')->on('users');

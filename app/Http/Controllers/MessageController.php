@@ -42,21 +42,19 @@ class MessageController extends Controller
         ]);
     }
 
-    public function answerForm($id ,$user, $message_text) {
+    public function answerForm($id) {
         $message = Message::find($id);
 
         return view('message/message_answer', [
-            'message' => $message,
-            'user' => $user,
-            'message_text' => $message_text
+            'message' => $message
         ]);
     }
 
-    public function answer(MessageRequest $request,$id, $user, $message_text) {
+    public function answer(MessageRequest $request,$id) {
 
         $message = new Message();
 
-        $message->create($request, $id, $user, $message_text);
+        $message->create($request, $id);
         return response()->json(['status' => 200,'msg'=> 'Вы ответили на сообщение']);
 
     }

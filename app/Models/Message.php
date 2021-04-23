@@ -36,9 +36,6 @@ class Message extends Model
         if ($this->image != null) unlink(public_path('storage/'.$this->image));
     }
 
-    public function getAnswered() {
-        return Message::where('answered_id', $this->id)->get();
-    }
 
     public function getMessages() {
         $mass = [];
@@ -49,11 +46,14 @@ class Message extends Model
         return $mass;
     }
 
+    public $messages = [];
+
     public function outTree($answered_id, $level) {
         $mass = $this->getMessages();
         if (isset($mass[$answered_id])) {
             foreach ($mass[$answered_id] as $m) {
-                echo "<div style='margin-left:" . ($level * 25) . "px;'>" . $m->name. "</div>";
+                array_push($this->messages, [$level =>  $m]);
+                //echo "<div style='margin-left:" . ($level * 25) . "px;'>" . $m->name. "</div>";
                 $level = $level + 1;
                 $this->outTree($m->id, $level);
                 $level = $level - 1;

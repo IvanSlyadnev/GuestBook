@@ -1,8 +1,11 @@
 @extends('layouts.app')
 <?php
-  $m = new App\Models\Message();
-  $m->outTree(0,0);
+    /*
+  foreach ($messages as $message) {
+      echo "<div style='margin-left:" . (key($message) * 25) . "px;'>" . $message[key($message)]->name. "</div>";
+  }
   die;
+    */
 ?>
 @section('content')
 <div class="container">
@@ -17,6 +20,11 @@
             </h2>
 
             <h3>Сообщения</h3>
+            @foreach($messages as $message)
+                <div class="card" style="margin-left: {{key($message) * 25}}">
+                    {{$message[key($message)]->name}}
+                </div>
+            @endforeach
         </div>
     </div>
 </div>

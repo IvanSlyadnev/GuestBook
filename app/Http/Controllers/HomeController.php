@@ -23,7 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $messages = Message::where('answer', 0)->get();
+        $m = new Message();
+        $m->outTree(0,0);
+        $messages = $m->messages;
         return view('home', [
             'messages' => $messages
         ]);

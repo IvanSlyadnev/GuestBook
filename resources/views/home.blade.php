@@ -1,5 +1,9 @@
 @extends('layouts.app')
-
+<?php
+  $m = new App\Models\Message();
+  $m->outTree(0,0);
+  die;
+?>
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -13,7 +17,6 @@
             </h2>
 
             <h3>Сообщения</h3>
-
         </div>
     </div>
 </div>

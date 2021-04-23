@@ -58,4 +58,5 @@ class MessageController extends Controller
         return response()->json(['status' => 200,'msg'=> 'Вы ответили на сообщение']);
 
     }
+
 }

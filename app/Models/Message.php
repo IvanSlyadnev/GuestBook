@@ -40,4 +40,24 @@ class Message extends Model
         return Message::where('answered_id', $this->id)->get();
     }
 
+    public function getMessages() {
+        $mass = [];
+        $messages = Message::all();
+        foreach ($messages as $message) {
+            $mass[$message->answered_id][] = $message;
+        }
+        return $mass;
+    }
+
+    public function outTree($answered_id, $level) {
+        $mass = $this->getMessages();
+        if (isset($mass[$answered_id])) {
+            foreach ($mass[$answered_id] as $m) {
+                echo "<div style='margin-left:" . ($level * 25) . "px;'>" . $m->name. "</div>";
+                $level = $level + 1;
+                $this->outTree($m->id, $level);
+                $level = $level - 1;
+            }
+        }
+    }
 }

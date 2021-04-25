@@ -24,7 +24,17 @@ class MessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required'
+            'name' => 'required|max:1000',
+            'image' => 'dimensions:min_width=100,min_height=100',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Обязательноо введите текст сообщения',
+            'name.max' => 'Объем сообщения должен быть не более 1000 символов',
+            'image.dimensions' => 'Картинка должен быть больше чем 100 на 100'
         ];
     }
 

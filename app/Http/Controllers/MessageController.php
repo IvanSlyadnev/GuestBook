@@ -6,10 +6,12 @@ use App\Http\Requests\MessageRequest;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Image;
 
 class MessageController extends Controller
 {
     public function form () {
+        if ($this->is_auth()) return redirect()->route('home');
         $message = new Message();
         return view('message/message_form', [
             'message' => $message
@@ -35,6 +37,7 @@ class MessageController extends Controller
     }
 
     public function edit($id) {
+        if ($this->is_auth()) return redirect()->route('home');
         $message = Message::find($id);
 
         return view('message/message_edit', [
@@ -43,6 +46,7 @@ class MessageController extends Controller
     }
 
     public function answerForm($id) {
+        if ($this->is_auth()) return redirect()->route('home');
         $message = Message::find($id);
 
         return view('message/message_answer', [
@@ -51,12 +55,15 @@ class MessageController extends Controller
     }
 
     public function answer(MessageRequest $request,$id) {
-
         $message = new Message();
-
         $message->create($request, $id);
         return response()->json(['status' => 200,'msg'=> 'Вы ответили на сообщение']);
 
+    }
+
+    private function is_auth() {
+        //if (Auth::user() == null) return redirect()->route('home');
+        return Auth::user() == null;
     }
 
 }

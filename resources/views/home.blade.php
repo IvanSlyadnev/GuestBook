@@ -20,16 +20,13 @@
             </h2>
 
             <h3>Сообщения</h3>
-            @foreach($messages as $message)
-                <?php
-                    $mes = $message[key($message)]
-                ?>
-                <div class="card" style="margin-left: {{key($message)*20}}px">
+            @foreach($messages as $mes)
+                <div class="card" style="margin-left: {{$mes->key*20}}px">
                     @if ($mes->answered_id > 0)
-                        Ответ пользователю {{$mes->getMessage($mes->answered_id)->user->name}}
-                            на сообщение {{$mes->getMessage($mes->answered_id)->name}}
+                        Ответ пользователю {{$model->getMessage($mes->answered_id)->user->name}}
+                        на сообщение {{$model->getMessage($mes->answered_id)->name}}
                     @endif
-                        <br>
+                    <br>
                     {{$mes->name}}
                     <br>
                     @if ($mes->image == null)
@@ -38,24 +35,28 @@
                         <img src="{{asset('storage/'.$mes->image)}}" width="200px" height="200px">
                     @endif
                     <br>
-                    Автор - @if (Auth::user() == $mes->user && $mes->isUpdate())
-                        ВЫ
-                        <a href="{{route('message.edit', $mes->id)}}">
-                            <button class="btn btn-check">Редактировать</button>
-                        </a>
-                        {!! Form::open(['method' => 'post', 'class' => 'delete','route' => ['message.delete', $message[key($message)]->id]]) !!}
-                        <button type="submit" class="btn btn-danger">Удалить</button>
-                        {!! Form::close() !!}
+                        Автор - @if (Auth::user() == $model->getMessage($mes->id)->user && $mes->isUpdate())
+                            ВЫ
+                            <a href="{{route('message.edit', $mes->id)}}">
+                                <button class="btn btn-check">Редактировать</button>
+                            </a>
+                            {!! Form::open(['method' => 'post', 'class' => 'delete','route' => ['message.delete', $mes->id]]) !!}
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                            {!! Form::close() !!}
+                        @else
+                            {{$model->getMessage($mes->id)->user->name}}
+                        @endif
+                    <br>
+                    @guest
                     @else
-                        {{$mes->user->name}}
-                    @endif
-                    <br>
-                    <br>
                     <a href="{{route('message.answer.form', $mes->id)}}">
                         <button class="btn btn-check">Ответить</button>
                     </a>
+                    @endif
                 </div>
             @endforeach
+
+            <?php echo $messages->links('vendor/pagination/bootstrap-4');?>
         </div>
     </div>
 </div>

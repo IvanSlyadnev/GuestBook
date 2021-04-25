@@ -1,5 +1,4 @@
 $(function () {
-    var spans = document.getElementsByClassName('error-text');
     $("#form").on('submit', function (e) {
         e.preventDefault();
 
@@ -20,16 +19,17 @@ $(function () {
                 document.location.href = '/home';
             },
             complete:function (data) {
+                console.log(data.status);
                 if (data.status == 422) {
-                    var errors = data.responseJSON.errors.name;
-                    for (var i = 0; i < errors.length; i++) {
-                        spans[i].innerHTML = errors[i];
+                    var errors = data.responseJSON.errors;
+                    for (var mis in errors) {
+                        $("."+mis).text(errors[mis]);
                     }
                 } else if (data.status == 200) {
                     $('#form')[0].reset();
                     //alert(data.msg);
                 }
-                console.log(data.status);
+
             }
         });
     });

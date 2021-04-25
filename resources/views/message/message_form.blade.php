@@ -8,9 +8,10 @@
             Form::model($message, ['method' => 'post', 'id'=> 'form' , 'enctype' => 'multipart/form-data' , 'route' => ['message.create'], 'class' => 'form-line'])
         !!}
         {!! Form::token() !!}
-        <span class="text-danger error-text name_error"></span>
+        <span class="text-danger error-text name"></span>
         {!! Form::label('name', 'Введите ваше сообщение') !!}
         {!! Form::textarea('name', '', ['class' => 'form-control', 'id' => 'textarea']) !!}
+        <span class="text-danger error-text image"></span>
         {!! Form::file('image', ['class' => 'form-control']) !!}
         {!! Form::submit('Создать', ['class' => 'btn btn-success']) !!}
         {!! Form::close() !!}

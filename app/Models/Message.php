@@ -14,19 +14,17 @@ class Message extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    public function create($request, $message_id = null) {
+    public function create($request, $message_id = 0) {
         $this->name = $request->input('name');
         $this->user_id = Auth::user()->id;
         if ($request->file('image') != null) {
             $this->deleteImage();
             $this->image = $request->file('image')->store('uploads', 'public');
         }
-        if ($message_id != null) {
-            $this->answered_id = $message_id;
-            $this->answer = true;
-        }
+        if ($message_id !== null) $this->answered_id = $message_id;
         $this->save();
     }
+
 
     public function delete_() {
         $this->deleteImage();
@@ -46,6 +44,11 @@ class Message extends Model
         return $mass;
     }
 
+    public function isUpdate () {
+        $messages = Message::where('answered_id', $this->id)->get();
+        return count($messages) == 0;
+    }
+
     public $messages = [];
 
     public function outTree($answered_id, $level) {
@@ -59,5 +62,9 @@ class Message extends Model
                 $level = $level - 1;
             }
         }
+    }
+
+    public function getMessage($id) {
+        return Message::find($id);
     }
 }

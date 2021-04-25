@@ -24,7 +24,7 @@ class MessageController extends Controller
 
     public function update(MessageRequest  $request, $id) {
         $message = Message::find($id);
-        $message->create($request);
+        $message->create($request, null);
         return response()->json(['status' => 200,'msg'=> 'Ваше сообщение изменено']);
     }
 
